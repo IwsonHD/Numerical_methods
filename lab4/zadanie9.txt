@@ -1,0 +1,8 @@
+Działanie funkcji fzero polegające na znalezieniu obszaru poszukiwań rozrastającego się od podanego argumentu do momentu znalezienia dowch argumentów dla których wartości funkcji mające przeciwne znaki, okazuje się, że może być problematyczne.
+
+Intrepretacja wyniku wywołania funkcji fzero(@tan, 6, options) - w tym przypadku funkcja poradziła sobie zgodnie z naszymi oczekiwaniami dobrze przybliżając nam miejsce zerowe
+
+Interpretacja wyniki wywołania funkcji fzero(@tan, 4.5, options) - tym razem funkcja blednie obrała przeszukiwany obszar. Powodem takiego zachowania było wystąpienie asymptoty blisko punktu 4.5 oraz fakt, że wartości bliskie asymptoty maja odwrotne znaki. Wartość zwrócona okazuje się być punktem osobliwym w którym wspomniana asymptota występuje.
+
+Wnioski - funkcja fzero wydaje się być przydatna a jej działanie optymalne jednak dobór parametru rozpoczęcia poszukiwań obszaru występowania miejsca zerowego okazał sie krytyczny.
+Nie umiejętny dobór wspomianego paramteru może skutkować w błędnym działaniu funkcji.

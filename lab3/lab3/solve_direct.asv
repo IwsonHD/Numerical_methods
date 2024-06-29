@@ -1,0 +1,22 @@
+function [A,b,x,time_direct,err_norm,index_number] = solve_direct(N)
+% A - macierz z równania macierzowego A * x = b
+% b - wektor prawej strony równania macierzowego A * x = b
+% x - rozwiązanie równania macierzowego
+% time_direct - czas wyznaczenia rozwiązania x
+% err_norm - norma błędu rezydualnego rozwiązania x; err_norm = norm(A*x-b);
+% index_number - Twój numer indeksu
+index_number = 193066;
+L1 = index_number(end);
+
+A, b = generate_matrix(N,L1);
+tik()
+x = A\b;
+time_
+err_norm = norm(A*x - b);
+
+
+
+x = [];
+time_direct = [];
+err_norm = 1;
+end

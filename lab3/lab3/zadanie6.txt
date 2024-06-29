@@ -1,0 +1,10 @@
+normy błędu:
+ -Jacobi - 6.6093e+10
+ -Gauss-Seidel - 1e+306 (ostatnia zanotowana wartość przed wartością NaN)
+ -metoda bezpośrednia - 6.9689e-13
+
+Jak można zauważyć metda Jacobi oraz metoda Gauss-Seidel'a nie zbiegją się
+
+Wnioski:
+Metody iteracyjnie bardzo dobrze sprawdzają się do przybliżania wyników małych macierzy, jednak dla tych większych zaczynają być niestabilne
+i skutkują w gigantycznych błędach norm
