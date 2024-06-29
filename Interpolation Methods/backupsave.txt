@@ -1,0 +1,116 @@
+\documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+\usepackage[polski]{polski}
+\usepackage{enumitem}
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\title{Metody interpolacji funkcji}
+\author{Iwo Czartowski 193066 gr.4 Informatyka sem. 4}
+
+\begin{document}
+\maketitle
+
+
+
+\section{Wstęp}
+Celem niniejszego projektu była implementacja oraz analiza działania metod interpolacji Lagrange'a oraz funkcjami splajanymi 3 stopnia. Postanowiłem również zbadać wpływ rozmieszczenia węzłów interpolujących i charaktetu funkcji oryginalnych na jakość funkcji interpolującej. Postanowiłem zrealizować wymienione algorytmy oraz sporządzić wykresy w języku Python
+zwarzywszy na wiele przydatnych wbudowanych narzędzi oraz bibliotek takich jak numpy, pandas czy matplotlib.
+
+\section{Dobór danych}
+Dobrane przeze mnie dane reprezentują profile wysokościowe 3 tras o różnej charkterystyce.
+\begin{enumerate}[label=\textbullet]
+    \item Ostrowa - teren dość gładki o tendencji rosnącej co do wysokości
+    \item Challanger Deep - depresja z jednym charakterystycznym minimum
+    \item Wielki Kanion Kolorado - tere górzysty z wieloma wzniesieniami
+\end{enumerate}
+\section{Interpolacja Lagrange'a}
+Interpolacja Lagrange'a cechuje się prostotą implementacji wynikającą z braku potrzeby rozwiązywania układów liniowych a jej złożoność obliczeniowa to \( O(n^2) \).
+\\Wykorzystuje on baze Lagrange mającą postać:
+\[
+\varphi_i(x) = \prod_{\substack{j=1 \\ j \neq i}}^{n+1} \frac{(x - x_j)}{(x_i - x_j)}
+\]\\
+Rozwiązuje to problem bazy funkcji interpolacji wielomianowej która jest złego uwarunkowania dla dużej ilości węzłów.
+\subsection{Równomierne rozmieszczenie węzłów dla trasy Ostrowa}
+\begin{center}
+\includegraphics[width=1\linewidth]{output_plots/data_with_smoothly_increasing_height_Lagrange_chebyshev_3.png}\\
+\caption{\label{fig:stock_prices_2011_2014} Interpolacja Lagrange'a względnie gładkiej funkji przy 3 równomiernie rozmieszczonych węzłach}
+\end{center}
+Mimo małej ilości węzłów omawiana metoda poradziła sobie dopusczalnie, jednak prawdopodobnie wynika to z prostoty badanej funkcji.
+\\
+\begin{center}
+\includegraphics[width=1\linewidth]{output_plots/data_with_smoothly_increasing_height_Lagrange_even_6.png}\\
+\caption{\label{fig:stock_prices_2011_2014} Interpolacja Lagrange'a względnie gładkiej funkji przy 6 równomiernie rozmieszczonych węzłach}
+\end{center}
+Zwiększając ilość węzłów udało nam się znacznie lepiej przybliżyć wartości oryginalnej funkcji.
+\\
+\begin{center}
+\includegraphics[width=1\linewidth]{output_plots/data_with_smoothly_increasing_height_Lagrange_even_9.png}\\
+\caption{\label{fig:stock_prices_2011_2014} Interpolacja Lagrange'a względnie gładkiej funkji przy 9 równomiernie rozmieszczonych węzłach}
+\end{center}
+Przybliżenia w środku dziedziny niemalże odwzorowały oryginalną funkcję, jednak na jej krawędziach zaczyna przejawiać się efekt Rungego pogarszający jakość przybliżeń w tych zakresach.
+\\
+\begin{center}
+\includegraphics[width=1\linewidth]{output_plots/data_with_smoothly_increasing_height_Lagrange_even_15.png}\\
+\caption{\label{fig:stock_prices_2011_2014} Interpolacja Lagrange'a względnie gładkiej funkji przy 15 równomiernie rozmieszczonych węzłach}
+\end{center}
+W tym przypadku efekt Rungego drastycznie pogorszył nam jakość naszej interpolacji na krańcach przedziału.
+\subsection{Równomierne rozmieszczenie węzłów dla profilu wysokościowego Głębi Challenger'a}
+\\
+\begin{center}
+\includegraphics[width=1\linewidth]{output_plots/data_with_a_single_significant_dip_Lagrange_even_3.png}\\
+\caption{\label{fig:stock_prices_2011_2014} Interpolacja Lagrange'a funkji z jednym charkterystycznym minimum przy 3 równomiernie rozmieszczonych węzłach}
+\end{center}
+Uzyskany efekt jest bezwartościowy. Mała ilość węzłów oraz ich rozmieszczenie nie pozwoliły na dopasowanie się naszej interpolacji do oryginalnego wykresu.
+\\
+\begin{center}
+\includegraphics[width=1\linewidth]{output_plots/data_with_a_single_significant_dip_Lagrange_even_6.png}\\
+\caption{\label{fig:stock_prices_2011_2014} Interpolacja Lagrange'a funkji z jednym charkterystycznym minimum przy 6 równomiernie rozmieszczonych węzłach}
+\end{center}
+Tym razem efekt jest znacznie lepszy, jednak niefortunne rozmieszczenie węzłów sprawiło, że interpolacja Lagrange nie poradziła sobie z nagłym spadkiem wysokości.
+\\
+\begin{center}
+\includegraphics[width=1\linewidth]{output_plots/data_with_a_single_significant_dip_Lagrange_even_9.png}\\
+\caption{\label{fig:stock_prices_2011_2014} Interpolacja Lagrange'a funkji z jednym charkterystycznym minimum przy 9 równomiernie rozmieszczonych węzłach}
+\end{center}
+Przybliżenia w środku dziedziny są dobre, jednak na krawędziach zaczynamy zauważać psujący dopasowanie efekt Rungego.
+\\
+\begin{center}
+\includegraphics[width=1\linewidth]{output_plots/data_with_a_single_significant_dip_Lagrange_even_15.png}\\
+\caption{\label{fig:stock_prices_2011_2014} Interpolacja Lagrange'a funkji z jednym charkterystycznym minimum przy 15 równomiernie rozmieszczonych węzłach}
+\end{center}
+Poraz kolejny zauważamy ogromne odchylenia od oczekiwanych wartości na krawędziach badanego przedziału.
+\subsection{Równomierne rozmieszczenie węzłów dla profilu wysokościowego Wielkiego kanionu Kolorado}
+\\
+\begin{center}
+\includegraphics[width=1\linewidth]{output_plots/data_with_numerous_elevations_Lagrange_even_3.png}\\
+\caption{\label{fig:stock_prices_2011_2014} Interpolacja Lagrange'a funkji z licznymi gwałtownymi wzrostami przy 3 równomiernie rozmieszczonych węzłach}
+\end{center}
+Funkcja interpolująca słabo dopasowała się do oryginalne funkcji jednak przyzwoicie ujęłą jej ogólną tendencję wzrostową.
+\\
+\begin{center}
+\includegraphics[width=1\linewidth]{output_plots/data_with_numerous_elevations_Lagrange_even_6.png}\\
+\caption{\label{fig:stock_prices_2011_2014} Interpolacja Lagrange'a funkji z licznymi gwałtownymi wzrostami przy 6 równomiernie rozmieszczonych węzłach}
+\end{center}
+Poraz kolejny naszemu przybliżeniu udało się jednie uchwycić ogólny trend wzrostowy a oprócz tego beznadziejnie oszacowała wartości na pierwszym przedziale.
+\\
+\begin{center}
+\includegraphics[width=1\linewidth]{output_plots/data_with_numerous_elevations_Lagrange_even_9.png}\\
+\caption{\label{fig:stock_prices_2011_2014} Interpolacja Lagrange'a funkji z licznymi gwałtownymi wzrostami przy 9 równomiernie rozmieszczonych węzłach}
+Interpolacja Lagrange zachowała się podobnie jak poprzednich przypadkach jednak tym razem daje o sobie znać efekt Rangego.
+\\
+\begin{center}
+\includegraphics[width=1\linewidth]{output_plots/data_with_numerous_elevations_Lagrange_even_15.png}\\
+\caption{\label{fig:stock_prices_2011_2014} Interpolacja Lagrange'a funkji z licznymi gwałtownymi wzrostami przy 15 równomiernie rozmieszczonych węzłach}
+\end{center}
+W tym przypadku wartości na krańcach dziedziny przybrały ogromne odchylenia od faktycznych wartości, na tyle zmieniając skale wykresu, że ciężko jest nam interpretować wartości w środku przedziału.
+\end{flushleft}
+\end{document}
